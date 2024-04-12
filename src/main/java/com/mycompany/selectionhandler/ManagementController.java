@@ -4,7 +4,12 @@
  */
 package com.mycompany.selectionhandler;
 
+import com.mycompany.selectionhandler.data.OutputWriter;
+import com.mycompany.selectionhandler.data.InputReader;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,7 +18,34 @@ import java.util.ArrayList;
 public class ManagementController {
     private final InputReader inputReader = new InputReader();
     private final OutputWriter outputWriter = new OutputWriter();
-    private final CalculationModule calculationModule = new CalculationModule();
+    private final CalculationController calcController = new CalculationController();
     private ArrayList<Double[]> selection = new ArrayList<>();
+    private ArrayList<List<String>> result;
+    
+    public InputReader getInputReader() {
+        return inputReader;
+    }
+    
+    public OutputWriter getOutputWriter() {
+        return outputWriter;
+    }
+    
+    public void writeToFile(File file, Boolean[] selectedPoints) throws IOException {
+        outputWriter.saveToFile(file, result, selectedPoints);
+    }
+    
+    public CalculationController getCalculationController() {
+        return calcController;
+    }
+    
+    public void setSelection(ArrayList<Double[]> selection) {
+        this.selection = selection;
+    }
+    
+    public ArrayList<List<String>> startCalculation(Boolean[] selectedPoints){
+        result = calcController.start(selectedPoints, this.selection);
+        return result;
+    }
+    
     
 }
