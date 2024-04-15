@@ -113,8 +113,10 @@ public class UserGUI extends javax.swing.JFrame {
     
     private void configureTable() throws IOException {
         DefaultTableModel model = new DefaultTableModel();
+        entryRestriction = false;
         String sheetName = sheetNamesComboBox.getSelectedItem().toString();
         try{
+            
             ArrayList<Double[]> dataList = managementController.getInputReader()
                 .readDataFromSheet(sheetName);
             managementController.setSelection(dataList);
@@ -487,9 +489,14 @@ public class UserGUI extends javax.swing.JFrame {
                 };
         
         if (!entryRestriction) {
-            ArrayList<List<String>> result = managementController.startCalculation(selectedPoints);
-            updateTableWithResult(result, selectedPoints);
-            saveAsButton.setVisible(true);
+            try{
+                ArrayList<List<String>> result = managementController.startCalculation(selectedPoints);
+                updateTableWithResult(result, selectedPoints);
+                saveAsButton.setVisible(true);
+            } catch (Exception ex){
+                showErrorCalculationMessage();
+            }
+            
         }
         else{
             showErrorCalculationMessage();

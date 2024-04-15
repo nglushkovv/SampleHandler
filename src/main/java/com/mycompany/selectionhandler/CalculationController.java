@@ -94,7 +94,7 @@ public class CalculationController {
             .removeAll(Collections.singleton(null));
        if (selectionZ.contains(null)) selectionZ
             .removeAll(Collections.singleton(null));
-        
+       
     }
     
     private void execute() {

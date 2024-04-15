@@ -57,6 +57,7 @@ public class InputReader {
             if(row.getCell(2) != null) columnZ[i-1] = row.getCell(2).getNumericCellValue();
             
         }
+
         if (columnX[0]!=null && columnY[0]!=null && columnZ[0]!=null){
             list.add(columnX);
             list.add(columnY);
