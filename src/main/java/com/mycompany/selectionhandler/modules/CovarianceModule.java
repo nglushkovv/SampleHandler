@@ -5,7 +5,6 @@
 package com.mycompany.selectionhandler.modules;
 import java.util.List;
 import org.apache.commons.math3.stat.correlation.Covariance;
-import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 /**
  *
@@ -14,19 +13,27 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 public class CovarianceModule {
     public double calculateCovariance(List<Double> dataFirst, List<Double> dataSecond,
             ArithmeticMeanModule mean) {
-        DescriptiveStatistics firstStat = new DescriptiveStatistics();
-        DescriptiveStatistics secondStat = new DescriptiveStatistics();
-        double covariance = 0;
-        double firstMean = mean.calculateArithmeticMean(dataFirst);
-        double secondMean = mean.calculateArithmeticMean(dataSecond);
+        double[] firstArray = new double[dataFirst.size()];
+        double[] secondArray = new double[dataSecond.size()];
+        int maxSize = dataFirst.size();
+        if(dataSecond.size() > maxSize) maxSize = dataSecond.size();
+        Covariance covariance = new Covariance();
         
-        for(Double i: dataFirst) {
-            for(Double j: dataSecond){
-                covariance += (i - firstMean) * (j - secondMean); 
+
+        for(int i=0; i < maxSize; i++) {
+            if (i < dataFirst.size()){
+                firstArray[i] = dataFirst.get(i);
+            }
+            if (i < dataSecond.size()) {
+                secondArray[i] = dataSecond.get(i);
             }
         }
-        covariance = covariance/(dataFirst.size() + dataSecond.size() - 1);
-        return covariance;
+        
+        return covariance.covariance(firstArray, secondArray);
+        
+        
+        
+       
        
     }
 }

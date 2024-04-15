@@ -392,6 +392,7 @@ public class UserGUI extends javax.swing.JFrame {
                         new String[namesList.size()])));
                 configureCheckBoxes(true);
                 startCalculationButton.setVisible(true);
+                sheetNamesComboBox.setVisible(true);
                 configureTable();
                 
                 

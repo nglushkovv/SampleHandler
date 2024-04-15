@@ -2,3 +2,12 @@
 target/
 JRE
 /JRE
+/jdk-20
+jdk-20/
+jdk-20
+lib
+/lib
+lib/
+bin/
+bin
+/bin
