@@ -8,7 +8,10 @@ package com.mycompany.selectionhandler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -59,17 +62,27 @@ public class UserGUI extends javax.swing.JFrame {
         sheetNamesComboBox.setVisible(false);
         
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files", "xlsx", "xls");
-        fileChooser.setFileFilter(filter);
-        fileSaver.setFileFilter(filter);
-        fileChooser.setAcceptAllFileFilterUsed(false);
-        fileSaver.setAcceptAllFileFilterUsed(false);
-        fileSaver.setDialogType(JFileChooser.SAVE_DIALOG);
         
+        
+        try {
+            File currentDirectory = new File(getClass().getProtectionDomain()
+                    .getCodeSource().getLocation().toURI().getPath()).getParentFile();
+            fileChooser = new JFileChooser(currentDirectory);
+            fileSaver = new JFileChooser(currentDirectory);
+            fileChooser.setFileFilter(filter);
+            fileSaver.setFileFilter(filter);
+            fileChooser.setAcceptAllFileFilterUsed(false);
+            fileSaver.setAcceptAllFileFilterUsed(false);
+            fileSaver.setDialogType(JFileChooser.SAVE_DIALOG);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(UserGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
         configureCheckBoxes(false);
         startCalculationButton.setVisible(false);
         saveAsButton.setVisible(false);
         
-        selectionsTable.setVisible(false);
+        samplesTable.setVisible(false);
         
        URL inputStream = this.getClass().getResource("/loadScreen.png");
        loadFileImage = new ImageIcon(inputStream);
@@ -119,14 +132,21 @@ public class UserGUI extends javax.swing.JFrame {
             
             ArrayList<Double[]> dataList = managementController.getInputReader()
                 .readDataFromSheet(sheetName);
-            managementController.setSelection(dataList);
-        
-            model.addColumn('X', dataList.get(0));
-            model.addColumn('Y', dataList.get(1));
-            model.addColumn('Z', dataList.get(2));
+            managementController.setSample(dataList);
+            String[] columnNames = new String[] {"X", "Y", "Z", "A", "B", "С", "D", "E", "F"};
+            for(int i=0; i<dataList.size(); i++) {
+                if (i >= columnNames.length-1){
+                    model.addColumn("F"+String.valueOf(i - (columnNames.length-1)), dataList.get(i));
+                }
+                else{
+                    model.addColumn(columnNames[i], dataList.get(i));
+                }
+                
+            }
 
-            selectionsTable.setModel(model);
-            selectionsTable.setVisible(true);
+
+            samplesTable.setModel(model);
+            samplesTable.setVisible(true);
         } catch(NullPointerException | IllegalStateException e) {
             showReadingErrorMessage();
             entryRestriction = true;
@@ -166,7 +186,7 @@ public class UserGUI extends javax.swing.JFrame {
         startCalculationButton = new javax.swing.JButton();
         saveAsButton = new javax.swing.JButton();
         scrollPaneForFirstTable = new javax.swing.JScrollPane();
-        selectionsTable = new javax.swing.JTable();
+        samplesTable = new javax.swing.JTable();
         scrollPaneForSecondTable = new javax.swing.JScrollPane();
         resultTable = new javax.swing.JTable();
         menuBar = new javax.swing.JMenuBar();
@@ -302,7 +322,7 @@ public class UserGUI extends javax.swing.JFrame {
         });
         mainPanel.add(saveAsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 150, -1));
 
-        selectionsTable.setModel(new javax.swing.table.DefaultTableModel(
+        samplesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -310,7 +330,7 @@ public class UserGUI extends javax.swing.JFrame {
 
             }
         ));
-        scrollPaneForFirstTable.setViewportView(selectionsTable);
+        scrollPaneForFirstTable.setViewportView(samplesTable);
 
         mainPanel.add(scrollPaneForFirstTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 50, 660, 170));
 
@@ -415,6 +435,7 @@ public class UserGUI extends javax.swing.JFrame {
     private void sheetNamesComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sheetNamesComboBoxActionPerformed
         try {
             configureTable();
+            saveAsButton.setVisible(false);
         } catch (IOException ex) {
             Logger.getLogger(UserGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -432,13 +453,13 @@ public class UserGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_maxMinsCheckBoxActionPerformed
 
-    private void updateTableWithResult(ArrayList<List<String>> result, Boolean[] selectedPoints) {
+    private ArrayList<String> getShowedIndicators(Boolean[] selectedPoints) {
         String[] indicatorsInfo =
             {"Cреднее геометрическое:",
              "Среднее арифметическое:",
              "Оценка стандартного отклонения:",
              "Размах:",
-             "Коэффициенты ковариации (X,Y), (X,Z), (Y,Z):",
+             "Коэффициенты ковариации:",
              "Количество элементов",
              "Коэффициент вариации",
              "Доверительный интервал:",
@@ -450,13 +471,16 @@ public class UserGUI extends javax.swing.JFrame {
         int counter = 0;
         for(Boolean permission: selectedPoints) {
             if (permission) {
-                    showedIndicators.add(indicatorsInfo[counter]);
-                    
+                    showedIndicators.add(indicatorsInfo[counter]);      
                 }
-            counter += 1;    
-                
+            counter += 1;
             }
+        return showedIndicators;
         
+    }
+    private void updateTableWithResult(ArrayList<List<String>> result, Boolean[] selectedPoints) {
+        
+        ArrayList<String> showedIndicators = getShowedIndicators(selectedPoints);
         DefaultTableModel resultModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -464,11 +488,21 @@ public class UserGUI extends javax.swing.JFrame {
         };
         };
         
-        System.out.println(result.get(0).get(1));
-        resultModel.addColumn("Индикаторы", showedIndicators.toArray());
-        resultModel.addColumn("Выборка X" ,result.get(0).toArray());
-        resultModel.addColumn("Выборка Y", result.get(1).toArray());
-        resultModel.addColumn("Выборка Z", result.get(2).toArray());
+        String[] columnNames = new String[] {"X", "Y", "Z", "A", "B", "С", "D", "E", "F"};
+        
+        
+        int counter = 0;
+        resultModel.addColumn("Результаты", showedIndicators.toArray());
+        for(List<String> res: result){
+            if(counter >= columnNames.length-1){
+                resultModel.addColumn("F" + String.valueOf((counter++) - columnNames.length+1),
+                        res.toArray());
+            }
+            else{
+                resultModel.addColumn(columnNames[counter++], res.toArray());
+            }
+            
+        }
         
         resultTable.setModel(resultModel);
         
@@ -495,11 +529,13 @@ public class UserGUI extends javax.swing.JFrame {
                 saveAsButton.setVisible(true);
             } catch (Exception ex){
                 showErrorCalculationMessage();
+                saveAsButton.setVisible(false);
             }
             
         }
         else{
             showErrorCalculationMessage();
+            
         }
         
         
@@ -584,11 +620,11 @@ public class UserGUI extends javax.swing.JFrame {
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JButton nextStepButton;
     private javax.swing.JTable resultTable;
+    private javax.swing.JTable samplesTable;
     private javax.swing.JButton saveAsButton;
     private javax.swing.JCheckBox scopeCheckBox;
     private javax.swing.JScrollPane scrollPaneForFirstTable;
     private javax.swing.JScrollPane scrollPaneForSecondTable;
-    private javax.swing.JTable selectionsTable;
     private javax.swing.JComboBox<String> sheetNamesComboBox;
     private javax.swing.JMenuItem showInstructionItem;
     private javax.swing.JButton startCalculationButton;

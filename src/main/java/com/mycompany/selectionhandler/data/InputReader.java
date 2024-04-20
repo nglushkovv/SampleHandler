@@ -33,7 +33,6 @@ public class InputReader {
             sheetNames.add(excelBook.getSheetName(i));
         }
         input.close();
-        System.out.println("тут");
         return sheetNames;
     }
     
@@ -45,28 +44,21 @@ public class InputReader {
         
       
         ArrayList<Double[]> list = new ArrayList<>();
-        Double[] columnX = new Double[excelSheet.getLastRowNum()];
-        Double[] columnY = new Double[excelSheet.getLastRowNum()];
-        Double[] columnZ = new Double[excelSheet.getLastRowNum()];
+        
+        for (int j=0; j < excelSheet.getRow(0).getLastCellNum(); j++){
+            list.add(new Double[excelSheet.getLastRowNum()]);
+        }
         
         for(int i=1; i < excelSheet.getLastRowNum() - 1; i++) {
             row = excelSheet.getRow(i);
-            
-            if(row.getCell(0) != null) columnX[i-1] = row.getCell(0).getNumericCellValue();
-            if(row.getCell(1) != null) columnY[i-1] = row.getCell(1).getNumericCellValue();
-            if(row.getCell(2) != null) columnZ[i-1] = row.getCell(2).getNumericCellValue();
-            
-        }
+            for (int j=0; j < excelSheet.getRow(i).getLastCellNum(); j++){
+                if(row.getCell(j) != null) list.get(j)[i-1] = row.getCell(j).getNumericCellValue();
+                if(list.get(j)[0] == null) throw new NullPointerException();
+            }
 
-        if (columnX[0]!=null && columnY[0]!=null && columnZ[0]!=null){
-            list.add(columnX);
-            list.add(columnY);
-            list.add(columnZ);
         }
-        else{
-            System.out.println(columnZ[0]);
-            throw new NullPointerException();
-        }
+        
+
         input.close();
         return list;
     }

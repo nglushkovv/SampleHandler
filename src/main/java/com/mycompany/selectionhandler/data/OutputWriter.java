@@ -35,19 +35,13 @@ public class OutputWriter {
             
             cell = row.createCell(0);
             cell.setCellValue(showedIndicators.get(i));
-            cell = row.createCell(1);
-            cell.setCellValue(result.get(0).get(i));
-            cell = row.createCell(2);
-            cell.setCellValue(result.get(1).get(i));
-            cell = row.createCell(3);
-            cell.setCellValue(result.get(2).get(i));
+            for(int j=0; j < result.size(); j++){
+                cell = row.createCell(j+1);
+                cell.setCellValue(result.get(j).get(i));
+                sheet.autoSizeColumn(j);
+            }
             
         }
-        
-        sheet.autoSizeColumn(0);
-        sheet.autoSizeColumn(1);
-        sheet.autoSizeColumn(2);
-        sheet.autoSizeColumn(3);
         
         FileOutputStream outputStream = new FileOutputStream(file);
         workbook.write(outputStream);
@@ -62,7 +56,7 @@ public class OutputWriter {
              "Среднее арифметическое:",
              "Оценка стандартного отклонения:",
              "Размах:",
-             "Коэффициенты ковариации (X,Y), (X,Z), (Y,Z):",
+             "Коэффициенты ковариации (слева направо):",
              "Количество элементов",
              "Коэффициент вариации",
              "Доверительный интервал:",

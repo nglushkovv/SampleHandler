@@ -11,8 +11,7 @@ import org.apache.commons.math3.stat.correlation.Covariance;
  * @author 79175
  */
 public class CovarianceModule {
-    public double calculateCovariance(List<Double> dataFirst, List<Double> dataSecond,
-            ArithmeticMeanModule mean) {
+    public double calculateCovariance(List<Double> dataFirst, List<Double> dataSecond) {
         double[] firstArray = new double[dataFirst.size()];
         double[] secondArray = new double[dataSecond.size()];
         int maxSize = dataFirst.size();

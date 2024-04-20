@@ -19,7 +19,7 @@ public class ManagementController {
     private final InputReader inputReader = new InputReader();
     private final OutputWriter outputWriter = new OutputWriter();
     private final CalculationController calcController = new CalculationController();
-    private ArrayList<Double[]> selection = new ArrayList<>();
+    private ArrayList<Double[]> sample = new ArrayList<>();
     private ArrayList<List<String>> result;
     
     public InputReader getInputReader() {
@@ -38,12 +38,12 @@ public class ManagementController {
         return calcController;
     }
     
-    public void setSelection(ArrayList<Double[]> selection) {
-        this.selection = selection;
+    public void setSample(ArrayList<Double[]> sample) {
+        this.sample = sample;
     }
     
     public ArrayList<List<String>> startCalculation(Boolean[] selectedPoints){
-        result = calcController.start(selectedPoints, this.selection);
+        result = calcController.start(selectedPoints, this.sample);
         return result;
     }
     
