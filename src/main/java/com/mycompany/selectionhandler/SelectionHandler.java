@@ -14,6 +14,7 @@ public class SelectionHandler {
         ManagementController managementController = new ManagementController();
         UserGUI gui = new UserGUI(managementController);
         gui.setVisible(true);
+        gui.setTitle("Sample Handler");
         gui.setSize(1100, 560);
         gui.setLocationRelativeTo(null);
         

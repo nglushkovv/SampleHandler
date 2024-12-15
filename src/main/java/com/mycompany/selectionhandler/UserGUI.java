@@ -224,9 +224,9 @@ public class UserGUI extends javax.swing.JFrame {
 
         introductionLabel.setBackground(new java.awt.Color(255, 255, 255));
         introductionLabel.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        introductionLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        introductionLabel.setText("Selection Handler");
-        mainPanel.add(introductionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 640, 40));
+        introductionLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        introductionLabel.setText("Sample Handler");
+        mainPanel.add(introductionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 280, 40));
 
         loadFileButton.setBackground(new java.awt.Color(255, 255, 255));
         loadFileButton.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -237,19 +237,20 @@ public class UserGUI extends javax.swing.JFrame {
                 loadFileButtonActionPerformed(evt);
             }
         });
-        mainPanel.add(loadFileButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 170, 30));
+        mainPanel.add(loadFileButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 170, 30));
 
+        fileStatusLabel.setAlignment(java.awt.Label.RIGHT);
         fileStatusLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         fileStatusLabel.setFont(new java.awt.Font("Dialog", 2, 12)); // NOI18N
         fileStatusLabel.setText("Файл не загружен.");
-        mainPanel.add(fileStatusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 50, -1, 30));
+        mainPanel.add(fileStatusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 10, 700, 30));
 
         sheetNamesComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sheetNamesComboBoxActionPerformed(evt);
             }
         });
-        mainPanel.add(sheetNamesComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 170, -1));
+        mainPanel.add(sheetNamesComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 170, -1));
 
         geometricMeanCheckBox.setSelected(true);
         geometricMeanCheckBox.setText("Среднее геометрическое");
@@ -258,7 +259,7 @@ public class UserGUI extends javax.swing.JFrame {
                 geometricMeanCheckBoxActionPerformed(evt);
             }
         });
-        mainPanel.add(geometricMeanCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
+        mainPanel.add(geometricMeanCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
 
         arifmeticMeanCheckBox.setSelected(true);
         arifmeticMeanCheckBox.setText("Среднее арифметическое");
@@ -267,35 +268,35 @@ public class UserGUI extends javax.swing.JFrame {
                 arifmeticMeanCheckBoxActionPerformed(evt);
             }
         });
-        mainPanel.add(arifmeticMeanCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
+        mainPanel.add(arifmeticMeanCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, -1, -1));
 
         deviationCheckBox.setSelected(true);
         deviationCheckBox.setText("Оценка стандартного отклонения");
-        mainPanel.add(deviationCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
+        mainPanel.add(deviationCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
 
         scopeCheckBox.setSelected(true);
         scopeCheckBox.setText("Размах");
-        mainPanel.add(scopeCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
+        mainPanel.add(scopeCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
 
         covarianceCheckBox.setSelected(true);
         covarianceCheckBox.setText("Коэффициенты ковариации");
-        mainPanel.add(covarianceCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
+        mainPanel.add(covarianceCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
 
         countCheckBox.setSelected(true);
         countCheckBox.setText("Количество элементов");
-        mainPanel.add(countCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+        mainPanel.add(countCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, -1, -1));
 
         variationCheckBox.setSelected(true);
         variationCheckBox.setText("Коэффициент вариации");
-        mainPanel.add(variationCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
+        mainPanel.add(variationCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, -1, -1));
 
         confidenceCheckBox.setSelected(true);
         confidenceCheckBox.setText("Доверительный интервал для мат. ожидания");
-        mainPanel.add(confidenceCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
+        mainPanel.add(confidenceCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, -1, -1));
 
         dispersionCheckBox.setSelected(true);
         dispersionCheckBox.setText("Оценка дисперсии");
-        mainPanel.add(dispersionCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, -1));
+        mainPanel.add(dispersionCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, -1, -1));
 
         maxMinsCheckBox.setSelected(true);
         maxMinsCheckBox.setText("Максимумы и минимумы");
@@ -304,7 +305,7 @@ public class UserGUI extends javax.swing.JFrame {
                 maxMinsCheckBoxActionPerformed(evt);
             }
         });
-        mainPanel.add(maxMinsCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, -1));
+        mainPanel.add(maxMinsCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, -1, -1));
 
         startCalculationButton.setText("Расчёт показателей");
         startCalculationButton.addActionListener(new java.awt.event.ActionListener() {
@@ -312,7 +313,7 @@ public class UserGUI extends javax.swing.JFrame {
                 startCalculationButtonActionPerformed(evt);
             }
         });
-        mainPanel.add(startCalculationButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 150, -1));
+        mainPanel.add(startCalculationButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, 150, -1));
 
         saveAsButton.setText("Сохранить в файл...");
         saveAsButton.addActionListener(new java.awt.event.ActionListener() {
@@ -320,7 +321,7 @@ public class UserGUI extends javax.swing.JFrame {
                 saveAsButtonActionPerformed(evt);
             }
         });
-        mainPanel.add(saveAsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 150, -1));
+        mainPanel.add(saveAsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, 150, -1));
 
         samplesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -332,7 +333,7 @@ public class UserGUI extends javax.swing.JFrame {
         ));
         scrollPaneForFirstTable.setViewportView(samplesTable);
 
-        mainPanel.add(scrollPaneForFirstTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 50, 660, 170));
+        mainPanel.add(scrollPaneForFirstTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 50, 740, 190));
 
         resultTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -344,7 +345,7 @@ public class UserGUI extends javax.swing.JFrame {
         ));
         scrollPaneForSecondTable.setViewportView(resultTable);
 
-        mainPanel.add(scrollPaneForSecondTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 230, 660, 190));
+        mainPanel.add(scrollPaneForSecondTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 250, 740, 220));
 
         mainMenu.setText("Файл");
 
@@ -373,8 +374,8 @@ public class UserGUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1033, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
