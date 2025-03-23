@@ -1,1 +1,3 @@
-<h1>Sample Handler</h1>
+### Разработано в рамках лабораторной работы №2. 
+### Дисциплина: "Теория и технология программирования"
+![image](https://github.com/user-attachments/assets/041bf096-cb11-4a74-abda-45c19a847723)
